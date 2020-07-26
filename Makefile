@@ -1,16 +1,17 @@
 .SILENT:
 
-dc = docker-compose -p ${APP_NAME}
+include .env
 
-web = web
-php = php
-db = db
-cache = cache
+dc=docker-compose -p ${APP_NAME}
+
+web=web
+php=php
+db=db
+cache=cache
 #db_testing = db_testing
 #node = node
 
 build:
-	cp -n .env.example .env
 	sudo mkdir -p vendor
 	sudo chmod 777 -R vendor/
 	sudo chmod 777 -R docker/storage
@@ -48,9 +49,6 @@ db_bash:
 
 db_testing_bash:
 	$(dc) exec $(db_testing) bash
-
-#node_bash:
-#	$(dc) exec $(node) bash
 
 restart:
 	$(dc) restart

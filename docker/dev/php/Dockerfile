@@ -5,7 +5,7 @@ RUN apt-get update \
     && apt-get install supervisor -y \
     && apt-get install libfontconfig1 -y \
     && apt-get install --reinstall procps -y \
-    && ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools unixodbc-dev \
+#    && ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools unixodbc-dev \
     && pecl install xdebug-2.7.1 \
     && docker-php-ext-enable xdebug
 
@@ -49,11 +49,11 @@ RUN docker-php-ext-configure intl \
     && docker-php-ext-install pdo pdo_mysql opcache zip intl sockets pcntl
 
 
-ADD ./php.ini /usr/local/etc/php/php.ini
+ADD ./docker/dev/php/php.ini /usr/local/etc/php/php.ini
 
-COPY ./php_init.sh /usr/bin/
+COPY ./docker/dev/php/php_init.sh /usr/bin/
 RUN chmod +x /usr/bin/php_init.sh
 
-COPY supervisor/horizon.conf /etc/supervisor/conf.d
-#COPY supervisor/websockets.conf /etc/supervisor/conf.d
-#COPY cron/settings.cron /etc/cron.d
+COPY ./docker/dev/php/supervisor/horizon.conf /etc/supervisor/conf.d
+#COPY ./docker/dev/php/supervisor/websockets.conf /etc/supervisor/conf.d
+#COPY ./docker/dev/php/cron/settings.cron /etc/cron.d
